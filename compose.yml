@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  golang:
+    image: vincentserpoul/testdeploygolang
+    ports:
+      - "8086:8086"
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      # service update configuration
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: continue
+        monitor: 60s
+        max_failure_ratio: 0.3
+
+# docker deploy --compose-file ./compose.yml testdeploy

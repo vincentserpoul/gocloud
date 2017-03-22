@@ -1,0 +1,8 @@
+---
+applications:
+  - name: testdeploy
+    buildpack: https://github.com/cloudfoundry/go-buildpack
+    domains: [local.pcfdev.io]
+    host: testdeploy
+    memory: 128M
+    instances: 1

@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: testdeploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: testdeploy
+    spec:
+      containers:
+      - image: vincentserpoul/testdeploygolang
+        imagePullPolicy: Always
+        name: testdeploy
+        ports:
+        - containerPort: 8086
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testdeploy-lb
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8086
+    protocol: TCP
+  selector:
+    app: testdeploy
